@@ -53,7 +53,7 @@ class Trainer():
             params=pickle.load(open(paramfile,"rb"))
         else:
             params=None
-        self.model = SennaNER(input=self.x, embeddings=self.embeddings,n_out=n_out, mini_batch_size=batch_size,
+        self.model = SennaNER(input=self.x, embeddings=self.embeddings,features=capsfeatures,n_out=n_out, mini_batch_size=batch_size,
                                        nhu=nhu,width=width,activation=activation,seed=seed,params=params)
 
         self.test_model = theano.function(inputs=[self.index],
@@ -85,6 +85,13 @@ class Trainer():
     def load_data(self,embeddingsfile,dataset,batch_size):
         logger.info('... loading data')        
         self.embeddings=np.load(embeddingsfile)
+        rng=np.random.RandomState(1234)
+        self.capsfeatures=np.asarray(rng.uniform(
+                    low=-np.sqrt(1. / (1)),
+                    high=np.sqrt(1. / (1)),
+#                    low=-np.sqrt(3. / 1),
+#                    high=np.sqrt(3. / 1),
+                    size=(4,5)), dtype=theano.config.floatX)
         train_set, valid_set, test_set = np.load(dataset)
         self.n_train_batches = train_set[0].shape[0] / batch_size
         self.n_valid_batches = valid_set[0].shape[0] / batch_size
