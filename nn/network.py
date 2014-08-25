@@ -12,7 +12,7 @@ from layers import DoubleEmbeddingHiddenLayer
 from interfaces import Network
 from util import hardtanh
 
-class oldennaNER(Network):
+class SennaNER(Network):
     def __init__(self, input,embeddings,mini_batch_size=32,nhu=300,width=5,activation=hardtanh,seed=1234,n_out=9,name='SennaNER',params=None):
         self.name = name
         self.layers = []
@@ -41,7 +41,7 @@ class oldennaNER(Network):
         print self.n_ins
         print self.params
 
-class SennaNER(Network):
+class SennaNER_alt(Network):
     def __init__(self, input,embeddings,mini_batch_size=32,nhu=300,width=5,activation=hardtanh,seed=1234,n_out=9,name='SennaNER',params=None):
         self.name = name
         self.layers = []
